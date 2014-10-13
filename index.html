@@ -9,6 +9,7 @@
 	$(document).ready( function() {
 
 		library.init();
+		library.init_bricks();
 		library.init_paddle();
 		library.init_mouse();
 
@@ -16,7 +17,7 @@
 	$(document).keydown(library.onKeyDown);
 	$(document).keyup(library.onKeyUp);
 	// Mouse events not working?
-	// $(document).mousemove(library.OnMouseMove);
+	$(document).mousemove(library.OnMouseMove);
 	</script>
 </head>
 <body>
