@@ -1,0 +1,1 @@
+A Simple implementation of the game 'Breakout' in Canvas

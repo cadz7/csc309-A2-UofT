@@ -1,0 +1,26 @@
+<html>
+<head>
+	 <meta charset="utf-8">
+	<title>CSC 309 A2 - BreakOut</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="library.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript">
+	$(document).ready( function() {
+
+		library.init();
+		library.init_paddle();
+		library.init_mouse();
+
+	});
+	$(document).keydown(library.onKeyDown);
+	$(document).keyup(library.onKeyUp);
+	// Mouse events not working?
+	// $(document).mousemove(library.OnMouseMove);
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="400" height="300"
+	 class="canvas-border"></canvas>
+</body>
+</html>
