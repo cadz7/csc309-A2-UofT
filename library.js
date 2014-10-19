@@ -4,8 +4,10 @@ var library = (function() {
 		var canvasMaxX;
 		var x = 100;
 		var y = 100;
+		var dy_init = 4;
 		var dx = 2;
 		var dy = 4;
+		var dy_max = 5;
 		var canvas_width;
 		var canvas_height;
 		var intervalId = 0;
@@ -114,55 +116,54 @@ var library = (function() {
 
 					//Draw  Bricks
 
-					  for (i=0; i < row_count; i++) {
-					    for (j=0; j < col_count; j++) {
-					      if (bricks[i][j] == 1) {
-					        library.rect((j * (brick_width)),
-					             (i * (brick_height)),
-					             brick_width, brick_height, colors[i]);
-					      }
-					    }
-					  }
-
-
-					  //Check if we hit the brick
-					  /*
-						x, y, are spatial locations of the ball
-						dy = -dy makes the ball go in reverse
-					  */
-					  rowheight = brick_height;
-					  colwidth = brick_width;
-					  row = Math.floor(y/rowheight);
-					  col = Math.floor(x/colwidth);
-					  //if so, reverse the ball and mark the brick as broken
-					  if (y < row_count * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
-					    current_score += 1;
-					    score.innerHTML = current_score;
-					    dy = -dy;
-					    bricks[row][col] = 0;
-					    if (current_score == total_score)
-					  	{
-								if(level_count == 1) {
-									level.innerHTML = "2";
-									level_count = 2;
-									total_score *= 2;
-									for (i=0; i < row_count; i++) {
-										for (j=0; j < col_count; j++) {
-											bricks[i][j] = 1;
-										}
+				  for (i=0; i < row_count; i++) {
+				    for (j=0; j < col_count; j++) {
+				      if (bricks[i][j] == 1) {
+				        library.rect((j * (brick_width)),
+				             (i * (brick_height)),
+				             brick_width, brick_height, colors[i]);
+				      }
+				    }
+				  }
+				  //Check if we hit the brick
+				  /*
+					x, y, are spatial locations of the ball
+					dy = -dy makes the ball go in reverse
+				  */
+				  rowheight = brick_height;
+				  colwidth = brick_width;
+				  row = Math.floor(y/rowheight);
+				  col = Math.floor(x/colwidth);
+				  //if so, reverse the ball and mark the brick as broken
+				  if (y < row_count * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
+				    current_score += 1;
+				    score.innerHTML = current_score;
+				    dy = -dy;
+				    bricks[row][col] = 0;
+				    if (current_score == total_score)
+				  	{
+							if(level_count == 1) {
+								level.innerHTML = "2";
+								level_count = 2;
+								dy = dy_init;
+								total_score *= 2;
+								for (i=0; i < row_count; i++) {
+									for (j=0; j < col_count; j++) {
+										bricks[i][j] = 1;
 									}
-								} else {
-									clearInterval(intervalId);
-									alert("You Won");
 								}
-								// initialize_game();
-					    }
-					  }
-
+							} else {
+								clearInterval(intervalId);
+								alert("You Won");
+							}
+							// initialize_game();
+				    }
+				  }
 					if (x + dx > canvas_width || x + dx < 0)
 						dx = -dx;
 					if(y + dy < 0)
-						dy = -dy
+						if(dy < dy_max) dy = -dy + 0.25;
+						else dy = -dy;
 					else if (y + dy > canvas_height )
 					{
 						if (x > paddlex && x < paddlex + paddlew)
