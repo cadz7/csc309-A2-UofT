@@ -22,6 +22,7 @@ var library = (function() {
 		var brick_width;
 		var brick_height;
 		var padding;
+		var color_array = ['blue', 'green', 'yellow', 'orange', 'red'];
 
 		return {
 				/* 
@@ -31,6 +32,8 @@ var library = (function() {
 					ctx = $('#canvas')[0].getContext("2d");
 					canvas_width = $('#canvas').width();
 					canvas_height = $('#canvas').height();
+					var score = $('#score');
+					current_score = 0;
 					intervalId = setInterval(library.draw, 10);
 				},
 				/* 
@@ -79,10 +82,11 @@ var library = (function() {
 				/* 
 					Canvas definition of bricks and paddle
 				*/
-				rect: function(x,y,w,h) {
+				rect: function(x,y,w,h,row,column) {
 					ctx.beginPath();
 					ctx.rect(x,y,w,h);
 					ctx.closePath();
+					ctx.fillStyle = color_array[row];
 					ctx.fill();	
 				},
 
@@ -109,7 +113,7 @@ var library = (function() {
 					      if (bricks[i][j] == 1) {
 					        library.rect((j * (brick_width + padding)) + padding, 
 					             (i * (brick_height + padding)) + padding,
-					             brick_width, brick_height);
+					             brick_width, brick_height, i, j);
 					      }
 					    }
 					  }
@@ -126,6 +130,8 @@ var library = (function() {
 					  col = Math.floor(x/colwidth);
 					  //if so, reverse the ball and mark the brick as broken
 					  if (y < row_count * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
+					    current_score += 1;
+					    score.innerHTML = current_score;
 					    dy = -dy;
 					    bricks[row][col] = 0;
 					  }
