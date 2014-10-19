@@ -21,10 +21,9 @@ var library = (function() {
 		var col_count;
 		var brick_width;
 		var brick_height;
-		var padding;
-		var color_array = ['blue', 'green', 'yellow', 'orange', 'red'];
 		var total_score;
 		var level_count;
+		var colors = ["red","orange","brown","yellow","green","blue"]
 		var level = $('#level')[0];
 		var score = $('#score')[0];
 		return {
@@ -61,11 +60,10 @@ var library = (function() {
 					Initialize the bricks
 				 */
 				init_bricks: function() {
-				  	row_count = 1;
-  					col_count = 5;
-					brick_width = (canvas_width/col_count) - 1;
+				  row_count = 5;
+  				col_count = 5;
+					brick_width = (canvas_width/col_count);
 					brick_height = 15;
-					padding = 1;
 
 					bricks = new Array(row_count);
 					for (i=0; i < row_count; i++) {
@@ -83,16 +81,17 @@ var library = (function() {
 					ctx.beginPath();
 					ctx.arc(x, y, radius, 0, Math.PI*2, true);
 					ctx.closePath();
+					ctx.fillStyle = colors[0];
 					ctx.fill();
 				},
 				/*
 					Canvas definition of bricks and paddle
 				*/
-				rect: function(x,y,w,h,row) {
+				rect: function(x,y,w,h,color) {
 					ctx.beginPath();
 					ctx.rect(x,y,w,h);
 					ctx.closePath();
-					ctx.fillStyle = color_array[4];
+					ctx.fillStyle = color;
 					ctx.fill();
 				},
 
@@ -111,16 +110,16 @@ var library = (function() {
 					if (rightDown && paddlex < 300) paddlex += 5;
 					else if (leftDown && paddlex > 0) paddlex -= 5;
 
-					library.rect(paddlex, canvas_height-paddleh, paddlew, paddleh);
+					library.rect(paddlex, canvas_height-paddleh, paddlew, paddleh,colors[0]);
 
 					//Draw  Bricks
 
 					  for (i=0; i < row_count; i++) {
 					    for (j=0; j < col_count; j++) {
 					      if (bricks[i][j] == 1) {
-					        library.rect((j * (brick_width + padding)) + padding,
-					             (i * (brick_height + padding)) + padding,
-					             brick_width, brick_height, i);
+					        library.rect((j * (brick_width)),
+					             (i * (brick_height)),
+					             brick_width, brick_height, colors[i]);
 					      }
 					    }
 					  }
@@ -131,8 +130,8 @@ var library = (function() {
 						x, y, are spatial locations of the ball
 						dy = -dy makes the ball go in reverse
 					  */
-					  rowheight = brick_height + padding;
-					  colwidth = brick_width + padding;
+					  rowheight = brick_height;
+					  colwidth = brick_width;
 					  row = Math.floor(y/rowheight);
 					  col = Math.floor(x/colwidth);
 					  //if so, reverse the ball and mark the brick as broken
