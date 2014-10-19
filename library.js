@@ -23,6 +23,7 @@ var library = (function() {
 		var brick_height;
 		var padding;
 		var color_array = ['blue', 'green', 'yellow', 'orange', 'red'];
+		var total_score;
 
 		return {
 				/* 
@@ -69,6 +70,7 @@ var library = (function() {
 							bricks[i][j] = 1;
 						}
 					}
+					total_score = row_count * col_count;
 				},
 				/* 
 					Canvas defnition of the ball
@@ -82,11 +84,11 @@ var library = (function() {
 				/* 
 					Canvas definition of bricks and paddle
 				*/
-				rect: function(x,y,w,h,row,column) {
+				rect: function(x,y,w,h,row) {
 					ctx.beginPath();
 					ctx.rect(x,y,w,h);
 					ctx.closePath();
-					ctx.fillStyle = color_array[row];
+					ctx.fillStyle = color_array[4];
 					ctx.fill();	
 				},
 
@@ -113,7 +115,7 @@ var library = (function() {
 					      if (bricks[i][j] == 1) {
 					        library.rect((j * (brick_width + padding)) + padding, 
 					             (i * (brick_height + padding)) + padding,
-					             brick_width, brick_height, i, j);
+					             brick_width, brick_height, i);
 					      }
 					    }
 					  }
@@ -134,6 +136,12 @@ var library = (function() {
 					    score.innerHTML = current_score;
 					    dy = -dy;
 					    bricks[row][col] = 0;
+					    if (current_score == total_score)
+					    {
+						clearInterval(intervalId);
+					    	alert('You won!');
+						// initialize_game();
+					    }
 					  }
 
 					if (x + dx > canvas_width || x + dx < 0)
@@ -146,7 +154,8 @@ var library = (function() {
 							dy = -dy;
 						else {
 							clearInterval(intervalId);
-							alert("boo! You lost!")
+							alert("boo! You lost!");
+							// initialize_game();
 						}
 					}
 					x += dx;
