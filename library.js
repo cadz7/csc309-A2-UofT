@@ -12,11 +12,11 @@ var library = (function() {
 		var paddlex; // Position of paddle
 		var paddleh; // Paddle height
 		var paddlew; // Paddle width
-		var rightDown = false; 
+		var rightDown = false;
 		var leftDown = false;
 		var canvasMinX = 0;
 		var canvasMaxX = 0;
-		var bricks; // bricks is a 2D array containing all the bricks 
+		var bricks; // bricks is a 2D array containing all the bricks
 		var row_count;
 		var col_count;
 		var brick_width;
@@ -24,20 +24,24 @@ var library = (function() {
 		var padding;
 		var color_array = ['blue', 'green', 'yellow', 'orange', 'red'];
 		var total_score;
-
+		var level_count;
+		var level = $('#level')[0];
+		var score = $('#score')[0];
 		return {
-				/* 
+				/*
 					Initialize the canvas.
 				 */
 				init: function() {
 					ctx = $('#canvas')[0].getContext("2d");
 					canvas_width = $('#canvas').width();
 					canvas_height = $('#canvas').height();
-					var score = $('#score');
+					level_count = 1;
 					current_score = 0;
+					score.innerHTML = 0;
+					level.innerHTML = 1;
 					intervalId = setInterval(library.draw, 10);
 				},
-				/* 
+				/*
 					Paddle initialization.
 				*/
 				init_paddle: function() {
@@ -45,7 +49,7 @@ var library = (function() {
 					paddleh = 10;
 					paddlew = 125;
 				},
-				/* 	
+				/*
 					Initialize the min/max for mouse gestures
 					Not working.
 				 */
@@ -57,7 +61,7 @@ var library = (function() {
 					Initialize the bricks
 				 */
 				init_bricks: function() {
-				  	row_count = 5;
+				  	row_count = 1;
   					col_count = 5;
 					brick_width = (canvas_width/col_count) - 1;
 					brick_height = 15;
@@ -72,7 +76,7 @@ var library = (function() {
 					}
 					total_score = row_count * col_count;
 				},
-				/* 
+				/*
 					Canvas defnition of the ball
 				*/
 				circle: function(x,y,radius) {
@@ -81,7 +85,7 @@ var library = (function() {
 					ctx.closePath();
 					ctx.fill();
 				},
-				/* 
+				/*
 					Canvas definition of bricks and paddle
 				*/
 				rect: function(x,y,w,h,row) {
@@ -89,7 +93,7 @@ var library = (function() {
 					ctx.rect(x,y,w,h);
 					ctx.closePath();
 					ctx.fillStyle = color_array[4];
-					ctx.fill();	
+					ctx.fill();
 				},
 
 				clear: function() {
@@ -98,10 +102,11 @@ var library = (function() {
 				/*
 					Main drawing function
 				*/
-				 draw: function() {
+				draw: function() {
 					library.clear();
 					library.circle(x, y, 10);
-
+					/* modify level */
+					level.innerHTML = level_count;
 					/* Move the paddle  */
 					if (rightDown && paddlex < 300) paddlex += 5;
 					else if (leftDown && paddlex > 0) paddlex -= 5;
@@ -113,7 +118,7 @@ var library = (function() {
 					  for (i=0; i < row_count; i++) {
 					    for (j=0; j < col_count; j++) {
 					      if (bricks[i][j] == 1) {
-					        library.rect((j * (brick_width + padding)) + padding, 
+					        library.rect((j * (brick_width + padding)) + padding,
 					             (i * (brick_height + padding)) + padding,
 					             brick_width, brick_height, i);
 					      }
@@ -137,10 +142,21 @@ var library = (function() {
 					    dy = -dy;
 					    bricks[row][col] = 0;
 					    if (current_score == total_score)
-					    {
-						clearInterval(intervalId);
-					    	alert('You won!');
-						// initialize_game();
+					  	{
+								if(level_count == 1) {
+									level.innerHTML = "2";
+									level_count = 2;
+									total_score *= 2;
+									for (i=0; i < row_count; i++) {
+										for (j=0; j < col_count; j++) {
+											bricks[i][j] = 1;
+										}
+									}
+								} else {
+									clearInterval(intervalId);
+									alert("You Won");
+								}
+								// initialize_game();
 					    }
 					  }
 
@@ -171,7 +187,7 @@ var library = (function() {
 							rightDown = true;
 							console.log('right pressed')
 						}
-					else if (e.keyCode == 37) 
+					else if (e.keyCode == 37)
 						{
 							leftDown = true;
 							console.log('left pressed')
