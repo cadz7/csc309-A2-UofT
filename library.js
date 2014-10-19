@@ -25,6 +25,7 @@ var library = (function() {
 		var brick_height;
 		var total_score;
 		var level_count;
+		var max_level = 3;
 		var colors = ["red","orange","brown","yellow","green","blue"]
 		var level = $('#level')[0];
 		var score = $('#score')[0];
@@ -62,7 +63,7 @@ var library = (function() {
 					Initialize the bricks
 				 */
 				init_bricks: function() {
-				  row_count = 5;
+				  row_count = 1;
   				col_count = 5;
 					brick_width = (canvas_width/col_count);
 					brick_height = 15;
@@ -99,6 +100,18 @@ var library = (function() {
 
 				clear: function() {
 					ctx.clearRect(0, 0, canvas_width, canvas_height);
+				},
+				levelUp: function () {
+						level_count++;
+						level.innerHTML = level_count;
+						dy = dy_init;
+						total_score *= 2;
+						for (i=0; i < row_count; i++) {
+							for (j=0; j < col_count; j++) {
+								bricks[i][j] = 1;
+							}
+						}
+						paddlew = paddlew * 3/4;
 				},
 				/*
 					Main drawing function
@@ -142,21 +155,11 @@ var library = (function() {
 				    bricks[row][col] = 0;
 				    if (current_score == total_score)
 				  	{
-							if(level_count == 1) {
-								level.innerHTML = "2";
-								level_count = 2;
-								dy = dy_init;
-								total_score *= 2;
-								for (i=0; i < row_count; i++) {
-									for (j=0; j < col_count; j++) {
-										bricks[i][j] = 1;
-									}
-								}
-							} else {
+							if(max_level == level_count) {
 								clearInterval(intervalId);
 								alert("You Won");
 							}
-							// initialize_game();
+							library.levelUp();
 				    }
 				  }
 					if (x + dx > canvas_width || x + dx < 0)
