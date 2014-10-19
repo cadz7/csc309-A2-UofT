@@ -166,8 +166,14 @@ var library = (function() {
 						else dy = -dy;
 					else if (y + dy > canvas_height )
 					{
-						if (x > paddlex && x < paddlex + paddlew)
+						if (x > paddlex && x < paddlex + paddlew) {
 							dy = -dy;
+							if(x < paddlex + paddlew/2) {
+								dx = -Math.abs(dx);
+							} else {
+								dx = Math.abs(dx);
+							}
+						}
 						else {
 							clearInterval(intervalId);
 							alert("boo! You lost!");
