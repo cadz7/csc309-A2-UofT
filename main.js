@@ -5,9 +5,10 @@ function initialize_game() {
 	library.init_mouse();
 }
 
-initialize_game();
 
 $(document).keydown(library.onKeyDown);
 $(document).keyup(library.onKeyUp);
-// Mouse events not working?
-$(document).mousemove(library.OnMouseMove);
+
+$('#start').click(function() {
+	initialize_game();
+});

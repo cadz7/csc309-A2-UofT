@@ -86,3 +86,19 @@ body {
     border-bottom: 0;
   }
 }
+
+
+.container1 {
+  display: inline;
+}
+
+.display-left {
+  float:left;
+}
+.click {
+  cursor: pointer;
+}
+
+.padding-left {
+  padding-left: 10%;
+}

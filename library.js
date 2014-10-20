@@ -2,8 +2,8 @@ var library = (function() {
 
 		var canvasMinX;
 		var canvasMaxX;
-		var x = 100;
-		var y = 100;
+		var x = 220;
+		var y = 150;
 		var dy_init = 4;
 		var dx = 2;
 		var dy = 4;
@@ -26,7 +26,7 @@ var library = (function() {
 		var total_score;
 		var level_count;
 		var max_level = 3;
-		var colors = ["red","orange","brown","yellow","green","blue"]
+		var colors = ["red","orange","green","yellow"]
 		var level = $('#level')[0];
 		var score = $('#score')[0];
 		return {
@@ -63,8 +63,8 @@ var library = (function() {
 					Initialize the bricks
 				 */
 				init_bricks: function() {
-				  row_count = 1;
-  				col_count = 5;
+				  row_count = 8;
+  				col_count = 14;
 					brick_width = (canvas_width/col_count);
 					brick_height = 15;
 
@@ -122,7 +122,7 @@ var library = (function() {
 					/* modify level */
 					level.innerHTML = level_count;
 					/* Move the paddle  */
-					if (rightDown && paddlex < 300) paddlex += 5;
+					if (rightDown && paddlex < 600) paddlex += 5;
 					else if (leftDown && paddlex > 0) paddlex -= 5;
 
 					library.rect(paddlex, canvas_height-paddleh, paddlew, paddleh,colors[0]);
@@ -134,7 +134,7 @@ var library = (function() {
 				      if (bricks[i][j] == 1) {
 				        library.rect((j * (brick_width)),
 				             (i * (brick_height)),
-				             brick_width, brick_height, colors[i]);
+				             brick_width, brick_height, colors[Math.floor(i/2)]);
 				      }
 				    }
 				  }
@@ -165,7 +165,7 @@ var library = (function() {
 					if (x + dx > canvas_width || x + dx < 0)
 						dx = -dx;
 					if(y + dy < 0)
-						if(dy < dy_max) dy = -dy + 0.25;
+						if(dy < dy_max) dy = -dy + 0.05;
 						else dy = -dy;
 					else if (y + dy > canvas_height )
 					{

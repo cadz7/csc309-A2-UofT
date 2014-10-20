@@ -11,18 +11,17 @@
 		  <div class="container">
 	      <div class="header">
 	        <ul class="nav nav-pills pull-right">
-	          <li class="active"><a>Settings</a></li>
+	          <li class="active"><a id="start" class="click">Start Game</a></li>
 	        </ul>
-	        <h3 class="text-muted">Breakout The Game</h3>
+	        <h3 class="text-muted" >Breakout Game</h3>
+	        <div class="container1">
+					<h3 class="display-left">Use arrows</h3>
+					<div class="display-left padding-left">Level: <p id="level"></p></div>
+					<div class="display-left padding-left">Score: <p id="score"></p></div>
+		</div>
 	      </div>
 
-				<div class="jumbotron">
-					<h3>Use arrows</h3>
-					<p id="level"></p>
-					<p id="score"></p>
-				</div>
-
-	      <div ng-view=""><canvas id="canvas" width="400" height="300"
+	      <div ng-view=""><canvas id="canvas" width="700" height="350"
 			class="canvas-border"></canvas></div>
 
 
@@ -31,7 +30,6 @@
 				<p><span class="glyphicon glyphicon-heart"></span> Assignment 2</p>
 			</div>
 		</div>
-
 
 	 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	 	<script type="text/javascript" src="library.js"></script>
