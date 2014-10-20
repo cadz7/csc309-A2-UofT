@@ -179,7 +179,8 @@ var library = (function() {
 						}
 						else {
 							clearInterval(intervalId);
-							alert("boo! You lost!");
+							$('#alert').addClass('alert alert-danger margin-top');
+							$('#alert').html('Oh Snap! You lost :(') ;
 							// initialize_game();
 						}
 					}

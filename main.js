@@ -9,6 +9,10 @@ function initialize_game() {
 $(document).keydown(library.onKeyDown);
 $(document).keyup(library.onKeyUp);
 
+$('#restart').click(function(){
+	location.reload();
+});
+
 $('#start').click(function() {
 	initialize_game();
 });

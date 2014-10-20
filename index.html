@@ -12,14 +12,18 @@
 	      <div class="header">
 	        <ul class="nav nav-pills pull-right">
 	          <li class="active"><a id="start" class="click">Start Game</a></li>
+	          <li class="active"><a id="restart" class="click">Restart Game</a></li>
 	        </ul>
-	        <h3 class="text-muted" >Breakout Game</h3>
+	        <h3 class="text-muted">Breakout Game</h3>
 	        <div class="container1">
 					<h3 class="display-left">Use arrows</h3>
+
 					<div class="display-left padding-left">Level: <p id="level"></p></div>
 					<div class="display-left padding-left">Score: <p id="score"></p></div>
 		</div>
+
 	      </div>
+	      <div class="" role="alert" id="alert"></div>
 
 	      <div ng-view=""><canvas id="canvas" width="700" height="350"
 			class="canvas-border"></canvas></div>
